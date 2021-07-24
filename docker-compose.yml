@@ -5,7 +5,7 @@ services:
     image: alurachallengebackend
     # entrypoint:
     #   - /app/entrypoint.sh
-    command: sh ./entrypoint.sh
+    command: bash ./entrypoint.sh
     build:
       context: .
       dockerfile: ./Dockerfile

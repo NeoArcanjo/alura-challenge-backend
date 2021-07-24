@@ -20,6 +20,7 @@ config :alura_challenge_backend, AluraChallengeBackendWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
+  server: true,
   watchers: []
 
 # ## SSL Support
