@@ -6,10 +6,10 @@ use Mix.Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :alura_challenge_backend, AluraChallengeBackend.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("PGUSER") || "postgres",
+  password: System.get_env("PGPASSWORD") || "N3MmsJzzYNPS2RJU",
   database: "alura_challenge_backend_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
+  hostname: System.get_env("PGHOST") || "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,

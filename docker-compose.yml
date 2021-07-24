@@ -1,20 +1,21 @@
-version: '3.4'
+version: "3.4"
 
 services:
   dev:
     image: alurachallengebackend
-    entrypoint: 
-      - ./entrypoint.sh
+    # entrypoint:
+    #   - /app/entrypoint.sh
+    command: sh ./entrypoint.sh
     build:
       context: .
       dockerfile: ./Dockerfile
     container_name: alurachallengebackend_dev
-    ports: 
+    ports:
       - 4000:4000
     environment:
       MIX_ENV: dev
       PGUSER: postgres
-      PGPASSWORD: secret
+      PGPASSWORD: "N3MmsJzzYNPS2RJU"
       PGHOST: db
       PGPORT: 5432
       PGDATABASE: alura_challenge_backend_dev
@@ -28,12 +29,12 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: alurachallengebackend_test
-    ports: 
+    ports:
       - 4002:4002
     environment:
       MIX_ENV: test
       PGUSER: postgres
-      PGPASSWORD: secret
+      PGPASSWORD: N3MmsJzzYNPS2RJU
       PGHOST: db
       PGPORT: 5432
       PGDATABASE: alura_challenge_backend_test
@@ -47,25 +48,25 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: alurachallengebackend
-    ports: 
+    ports:
       - 4000:4000
     environment:
       MIX_ENV: prod
       PGUSER: postgres
-      PGPASSWORD: secret
+      PGPASSWORD: N3MmsJzzYNPS2RJU
       PGHOST: db
       PGPORT: 5432
       PGDATABASE: alura_challenge_backend
     depends_on:
       - db
       - adminer
-    
+
   db:
     image: postgres:13
     container_name: alurachallengebackend_db
-    environment: 
+    environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: N3MmsJzzYNPS2RJU
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -84,5 +85,5 @@ services:
     ports:
       - "7856:8080"
 
-volumes: 
+volumes:
   pgdata:

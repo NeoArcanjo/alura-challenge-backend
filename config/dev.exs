@@ -2,10 +2,10 @@ use Mix.Config
 
 # Configure your database
 config :alura_challenge_backend, AluraChallengeBackend.Repo,
-  username: "postgres",
-  password: "secret",
+  username: System.get_env("PGUSER") || "postgres",
+  password: System.get_env("PGPASSWORD") || "N3MmsJzzYNPS2RJU",
   database: "alura_challenge_backend_dev",
-  hostname: "db",
+  hostname: System.get_env("PGHOST") || "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

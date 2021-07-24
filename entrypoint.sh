@@ -1,5 +1,7 @@
 # !/bin/bash
 
+echo $PGPASSWORD
+echo $POSTGRES_PASSWORD
 
 while ! pg_isready -q -h $PGHOST -p $PGPORT -U $PGUSER
 do
@@ -8,14 +10,17 @@ do
 done
 
 if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
+
 	echo "database $PGDATABASE doesnt exist. Creating..."
 	createdb -E UTF8 $PGDATABASE -l en_US.UTF-8 -T template0
+	mix run priv/repo/seeds.exs
 	echo "database $PGDATABASE created"
 fi
 
+
 mix ecto.migrate
 
-elixir --cookie katana --name katana@socket --no-halt -S mix run
+exec elixir --cookie katana --name api@alura --no-halt -S mix run
 
 # echo ${PASSWD} | sudo -S npm i -g wait-on broken-link-checker
 

@@ -1,8 +1,8 @@
 
 
-FROM elixir:1.12.1
+FROM elixir:1.12.1 AS builder
 LABEL Name=alurachallengebackend Version=0.0.1
-RUN apt-get -y update
+RUN apt-get -y update && apt-get -y install postgresql-client
 
 RUN mkdir app
 COPY . /app

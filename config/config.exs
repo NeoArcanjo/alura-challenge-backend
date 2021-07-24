@@ -34,7 +34,7 @@ if Mix.env() != :prod do
         tasks: [
           "mix format",
           "mix clean",
-          "mix compile --warning-as-errors",
+          "mix compile --warning-as-errors"
           # "mix credo --strict",
           # "mix doctor --summary",
           # "mix test --trace"
