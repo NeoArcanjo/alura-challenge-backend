@@ -1,0 +1,88 @@
+version: '3.4'
+
+services:
+  dev:
+    image: alurachallengebackend
+    entrypoint: 
+      - ./entrypoint.sh
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: alurachallengebackend_dev
+    ports: 
+      - 4000:4000
+    environment:
+      MIX_ENV: dev
+      PGUSER: postgres
+      PGPASSWORD: secret
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: alura_challenge_backend_dev
+    depends_on:
+      - db
+      - adminer
+
+  test:
+    image: alurachallengebackend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: alurachallengebackend_test
+    ports: 
+      - 4002:4002
+    environment:
+      MIX_ENV: test
+      PGUSER: postgres
+      PGPASSWORD: secret
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: alura_challenge_backend_test
+    depends_on:
+      - db
+      - adminer
+
+  prod:
+    image: alurachallengebackend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: alurachallengebackend
+    ports: 
+      - 4000:4000
+    environment:
+      MIX_ENV: prod
+      PGUSER: postgres
+      PGPASSWORD: secret
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: alura_challenge_backend
+    depends_on:
+      - db
+      - adminer
+    
+  db:
+    image: postgres:13
+    container_name: alurachallengebackend_db
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      ADMINER_DESIGN: nette
+      ADMINER_DEFAULT_SERVER: db
+      ADMINER_DEFAULT_DB: PostgreSQL
+    ports:
+      - "7856:8080"
+
+volumes: 
+  pgdata:
